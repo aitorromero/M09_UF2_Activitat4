@@ -8,18 +8,39 @@ import static java.util.concurrent.ForkJoinTask.invokeAll;
 import java.util.concurrent.RecursiveTask;
 
 
-
+    /**
+     * Aquesta clase ForkJoin extendeix de RecursiveTask<Integer> per tal
+     * de poder fer recursivitat. Declarem l'array, un inici i un final d'aquest
+     * per a poder separar l'array en arrays mes petits i el tamany d'aquest.
+     * @author ALUMNEDAM
+     */
     public class ForkJoin extends RecursiveTask<Integer> {
 
         private final ArrayList<Integer> array;
         private final int inici, finale;
+        private final static int tamanyoArraySueldos=20000;
 
+        /**
+         * Declarem el constructor que rep l'array i l'inici i el fi com a int.
+         * Que utilitzarem per a crear la resta de fills.
+         * @param arr
+         * @param ini
+         * @param fin 
+         */
         public ForkJoin(ArrayList arr, int ini, int fin) {
             this.array = arr;
             this.inici = ini;
             this.finale = fin;
         }
 
+        /**
+         * @Override ens indica que sobreescriurem aquest metode.
+         * En aquest metode pasem l'array i creem fills fins a que finale-inici
+         * sigui mes 1 o mes petit que aquest. Per a despres entrar en el if 
+         * i fer la operacio requerida, en aquest cas calcular el sou maxim.
+         * Per a despres aconseguir el sou maxim de l'array senser.
+         * @return 
+         */
         @Override
         protected Integer compute() {
             if (finale - inici <= 1) {
@@ -38,12 +59,16 @@ import java.util.concurrent.RecursiveTask;
 
         
 
-    
+    /**
+     * Inicialitzem declarem un random i el nostre array de sous. Omplim l'array
+     * amb un for i despres cridem a protected per a realitzar la tasca recursiva.
+     * @param args 
+     */
     public static void main(String[] args) {
         Random rnd = new Random();
         ArrayList<Integer> sueldosArrayList = new ArrayList<>();
 
-        for (int i = 0; i < 20000; i++) {
+        for (int i = 0; i < tamanyoArraySueldos; i++) {
             int randomSueldo = rnd.nextInt(50001);
             sueldosArrayList.add(randomSueldo);
         }
